@@ -1,0 +1,352 @@
+$id: "./report-payloads.schema.json"
+title: "Report-Payloads"
+description: "Payload types available for Reports"
+$comment: |
+    Schema for OpenADR 3 Report payload types.
+    This schema provides the definitions in the
+    Report Enumerations table in Definition.md.
+
+    This file is released under the Apache 2.0 license.
+    Read more at: http://www.apache.org/licenses/LICENSE-2.0.html
+
+definitions:
+    READING:
+        $id: 'report-payloads.schema.json#/definitions/READING'
+        description: |
+            An instantaneous data point, as from a meter. Same as pulse count. Payload
+            value is a float and units are defined in payloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+    USAGE:
+        $id: 'report-payloads.schema.json#/definitions/USAGE'
+        description: |
+            Energy usage over an interval. Payload value is a float and units are defined in
+            payloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+            minimum: 0
+    DEMAND:
+        $id: 'report-payloads.schema.json#/definitions/DEMAND'
+        description: |
+            Power usage for an interval, i.e. Real Power. Payload value is a float, units
+            defined in payloadDescriptor. Reading type indicates MEAN, PEAK,
+            FORECAST or DIRECT_READ.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+            minimum: 0
+    SETPOINT:
+        $id: 'report-payloads.schema.json#/definitions/SETPOINT'
+        description: |
+            Current control setpoint of a resource, see CONTROL_SETPOINT
+            in event interval payloads. Payload values are determined
+            by the application.
+            The actual values to be used in this
+            payload will be defined by program providers.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            oneOf:
+                - type: number
+                - type: integer
+                - type: string
+                  minLength: 1
+                  maxLength: 128
+                - type: boolean
+                - $ref: '#/components/schemas/point'
+    DELTA_USAGE:
+        $id: 'report-payloads.schema.json#/definitions/DELTA_USAGE'
+        description: |
+            Change in usage as compared to a baseline. Payload value is a float and units
+            are defined in payloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    BASELINE:
+        $id: 'report-payloads.schema.json#/definitions/BASELINE'
+        description: |
+            Indicates energy or power consumption in the absence of load control.
+            Payload value is determined by reading type which may indicate usage or
+            demand.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    OPERATING_STATE:
+        $id: 'report-payloads.schema.json#/definitions/OPERATING_STATE'
+        description: |
+            Payload values array includes a list of operating state enumerations, see
+            below.
+        type: array
+        minItems: 1
+        maxItems: 1
+        # This payload is for an enumerated type, Table 4. Operating State Enumerations
+        items:
+            type: string
+            enum:
+                # Resource is operating normally. No Demand Response directives are
+                # currently being followed.
+                - NORMAL
+                # Resource has self-reported an error or is not addressable by VEN.
+                - ERROR
+                # CTA-2045 device “Indicates that no demand response event is in effect
+                # and the SGD has no/insignificant energy consumption.”
+                - IDLE_NORMAL
+                # CTA-2045 device “Indicates that no demand response event is in effect
+                # and the SGD has significant energy consumption.”
+                - RUNNING_NORMAL
+                # CTA-2045 device “Indicates that a curtailment type demand response
+                # event is in effect and the SGD has significant energy consumption.”
+                - RUNNING_CURTAILED
+                # CTA-2045 device “Indicates that a heightened-operation type of demand
+                # response event is in effect and the SGD has significant energy
+                # consumption.”
+                - RUNNING_HEIGHTENED
+                # CTA-2045 device “Indicates that a curtailment type demand response
+                # event is in effect and the SGD has no/insignificant energy consumption.”
+                - IDLE_CURTAILED
+                # CTA-2045 device “Indicates that the SGD is not operating because it
+                # needs maintenance support or is in some way disabled (i.e. no response
+                # to the grid).”
+                - SGD_ERROR_CONDITION
+                # CTA-2045 device “Indicates that a heightened-operation type of demand
+                # response event is in effect and the SGD has no/insignificant energy
+                # consumption.”
+                - IDLE_HEIGHTENED
+                # CTA-2045 device “Indicates that the SGD is presently opted out of any
+                # demand response events and the SGD has no/insignificant energy
+                # consumption.”
+                - IDLE_OPTED_OUT
+                # CTA-2045 device “Indicates that the SGD is presently opted out of any
+                # demand response events and the SGD has significant energy
+                # consumption.”
+                - RUNNING_OPTED_OUT
+                # A report contains a list of resources, each of which may contain a list of
+                # intervals containing reporting data. Each item in the resource list contains a
+                # resourceName attribute. This resourceName indicates the the interval data
+                # is the aggregate of data from more than one resource.
+                - AGGREGATED_REPORT
+
+    UP_REGULATION_AVAILABLE:
+        $id: 'report-payloads.schema.json#/definitions/UP_REGULATION_AVAILABLE'
+        description: |
+            Up Regulation capacity available for dispatch, in real power. Payload value is a
+            float, units defined in payloadDescriptor.
+            Reading type indicates MEAN, PEAK, FORECAST.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    DOWN_REGULATION_AVAILABLE:
+        $id: 'report-payloads.schema.json#/definitions/DOWN_REGULATION_AVAILABLE'
+        description: |
+            Down Regulation capacity available for dispatch, in real power. Payload value
+            is a float, units defined in payloadDescriptor.
+            Reading type indicates MEAN, PEAK, FORECAST.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    REGULATION_SETPOINT:
+        $id: 'report-payloads.schema.json#/definitions/REGULATION_SETPOINT'
+        description: |
+            Regulation setpoint as instructed as part of regulation services. Payload value
+            is a float, units defined in payloadDescriptor.
+            Reading type indicates MEAN, PEAK, FORECAST.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    STORAGE_USABLE_CAPACITY:
+        $id: 'report-payloads.schema.json#/definitions/STORAGE_USABLE_CAPACITY'
+        description: |
+            Usable energy that the storage device can hold when fully charged. Payload
+            value is a float, units of energy defined in payloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    STORAGE_CHARGE_LEVEL:
+        $id: 'report-payloads.schema.json#/definitions/STORAGE_CHARGE_LEVEL'
+        description: |
+            Current storage charge level expressed as a percentage, where 0% is empty
+            and 100% is full. Payload value is a float, units of PERCENT defined in
+            payloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+            minimum: 0
+            maximum: 1
+
+    STORAGE_MAX_DISCHARGE_POWER:
+        $id: 'report-payloads.schema.json#/definitions/STORAGE_MAX_DISCHARGE_POWER'
+        description: |
+            The maximum sustainable power that can be discharged into an electricity
+            network (injection). Payload value is a float, units of power defined in
+            payloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    STORAGE_MAX_CHARGE_POWER:
+        $id: 'report-payloads.schema.json#/definitions/STORAGE_MAX_CHARGE_POWER'
+        description: |
+            The maximum sustainable power that can be charged from an electricity
+            network (load). Payload value is a float, units of power defined in
+            payloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    SIMPLE_LEVEL:
+        $id: 'report-payloads.schema.json#/definitions/SIMPLE_LEVEL'
+        description: |
+            Simple level that a VEN resource is operating at for each Interval. Payload
+            value is an integer 0, 1, 2, 3 corresponding to values in SIMPLE events.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: integer
+            minimum: 0
+            maximum: 3
+
+    USAGE_FORECAST:
+        $id: 'report-payloads.schema.json#/definitions/USAGE_FORECAST'
+        description: |
+            Payload values array contains a single float indicating expected resource
+            usage for the associated interval. Units of energy defined in payloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    STORAGE_DISPATCH_FORECAST:
+        $id: 'report-payloads.schema.json#/definitions/STORAGE_DISPATCH_FORECAST'
+        description: |
+            Payload values array contains a single float indicating expected stored energy
+            that could be dispatched for the associated interval.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    LOAD_SHED_DELTA_AVAILABLE:
+        $id: 'report-payloads.schema.json#/definitions/LOAD_SHED_DELTA_AVAILABLE'
+        description: |
+            Payload values array contains a single float indicating expected increase or
+            decrease in load by a resource for the associated interval.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    GENERATION_DELTA_AVAILABLE:
+        $id: 'report-payloads.schema.json#/definitions/GENERATION_DELTA_AVAILABLE'
+        description: |
+            Payload values array contains a single float indicating expected generation by
+            a resource for the associated interval.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    DATA_QUALITY:
+        $id: 'report-payloads.schema.json#/definitions/DATA_QUALITY'
+        description: |
+            Payload values array contains a string indicating data quality of companion
+            report payload in the same interval. Strings may be one of enumerated Data
+            Quality enumerations.
+        type: array
+        minItems: 1
+        maxItems: 1
+        # These values are Table 6. Data Quality Enumerations
+        items:
+            type: string
+            enum:
+                # There are no known reasons to doubt the validity of the data.
+                - OK
+                # The data item is unavailable for this interval.
+                - MISSING
+                # This data item has been estimated from other relevant information such as adjacent
+                # intervals.
+                - ESTIMATED
+                # There is a data item but it is known or suspected to be erroneous.
+                - BAD
+
+    IMPORT_RESERVATION_CAPACITY:
+        $id: 'report-payloads.schema.json#/definitions/IMPORT_RESERVATION_CAPACITY'
+        description: |
+            Amount of additional import capacity requested. Payload values are a float.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    IMPORT_RESERVATION_FEE:
+        $id: 'report-payloads.schema.json#/definitions/IMPORT_RESERVATION_FEE'
+        description: |
+            Amount per unit of import capacity that the VEN is willing to pay for the
+            requested reservation. Payload value is a float with currency defined in
+            payloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    EXPORT_RESERVATION_CAPACITY:
+        $id: 'report-payloads.schema.json#/definitions/EXPORT_RESERVATION_CAPACITY'
+        description: |
+            Amount of additional export capacity requested. Payload values are a float.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+
+    EXPORT_RESERVATION_FEE:
+        $id: 'report-payloads.schema.json#/definitions/EXPORT_RESERVATION_FEE'
+        description: |
+            Amount per unit of export capacity that the VEN is willing to pay for the
+            requested reservation. Payload value is a float with currency defined in
+            payloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+

@@ -1,0 +1,45 @@
+$id: "./reading-types.schema.json"
+title: "Reading-Types"
+description: "Reading types values for the reportPayloadDescriptor"
+$comment: |
+    Schema for OpenADR 3 report payload descriptor reading types.
+
+    This file is released under the Apache 2.0 license.
+    Read more at: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# This schema is different in that it does not define
+# entries in a valuesMap.  Instead, it describes the
+# allowed values for the readingType attribute of
+# an reportPayloadDescriptor.
+
+definitions:
+    DIRECT_READ:
+        description: |
+            Payload values have been determined by direct measurement from a resource.
+    ESTIMATED:
+        description: |
+            Payload value is an estimate where no Direct Read was available for the
+            interval, but sufficient other data exist to make a reasonable estimate.
+    SUMMED:
+        description: |
+            Payload value is the sum of multiple data sources.
+    MEAN:
+        description: |
+            Payload value represents the mean measurements over an interval.
+    PEAK:
+        description: |
+            Payload value represents the highest measurement over an interval.
+    FORECAST:
+        description: |
+            Payload value is a forecast of future values, not a measurement or estimate of
+            actual data.
+    AVERAGE:
+        description: |
+            Payload value represents the average of measurements over an interval.
+    NORMAL:
+        description: |
+            Resource is operating normally. No Demand Response directives are
+            currently being followed.
+    ERROR:
+        description: |
+            Resource has self-reported an error or is not addressable by VEN.

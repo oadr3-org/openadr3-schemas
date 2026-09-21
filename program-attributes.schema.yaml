@@ -1,0 +1,66 @@
+$id: "./program-attributes.schema.json"
+title: "Program Attributes"
+description: "Attrbutes of a Program"
+$comment: |
+    Schema for OpenADR 3 program attributes types.
+    This schema provides the definitions in the
+    Program Attributes table in Definition.md.
+
+    This file is released under the Apache 2.0 license.
+    Read more at: http://www.apache.org/licenses/LICENSE-2.0.html
+
+definitions:
+    PROGRAM_LONG_NAME:
+        $id: 'program-attributes.schema.json#/definitions/PROGRAM_LONG_NAME'
+        description: |
+            Long name of program for human readability.
+        type: string
+        minLength: 1
+        maxLength: 128
+    RETAILER_NAME:
+        $id: 'program-attributes.schema.json#/definitions/RETAILER_NAME'
+        description: |
+            Short name of energy retailer providing the program.
+        type: string
+        minLength: 1
+        maxLength: 128
+    RETAILER_LONG_NAME:
+        $id: 'program-attributes.schema.json#/definitions/RETAILER_LONG_NAME'
+        description: |
+            Long name of energy retailer for human readability.
+        type: string
+        minLength: 1
+        maxLength: 128
+    PROGRAM_TYPE:
+        $id: 'program-attributes.schema.json#/definitions/PROGRAM_TYPE'
+        description: |
+            A program defined categorization.
+        type: string
+        minLength: 1
+        maxLength: 128
+    COUNTRY:
+        $id: 'program-attributes.schema.json#/definitions/COUNTRY'
+        description: |
+            Alpha-2 code per ISO 3166-1.
+        type: string
+        minLength: 1
+        maxLength: 128
+    PRINCIPAL_SUBDIVISION:
+        $id: 'program-attributes.schema.json#/definitions/PROGRAM_TYPE'
+        description: |
+            Coding per ISO 3166-2. E.g. state in US.
+        type: string
+        minLength: 1
+        maxLength: 128
+    BINDING_EVENTS:
+        $id: 'program-attributes.schema.json#/definitions/PROGRAM_TYPE'
+        description: |
+            True if events are fixed once transmitted.
+        type: boolean
+    LOCAL:
+        $id: 'program-attributes.schema.json#/definitions/PROGRAM_TYPE'
+        description: |
+            Indicates that data in the program, e.g. price signals, have been created by a local VTN, possibly adapting from a grid VTN.
+
+            See the Local Scenarios chapter for more information.
+        type: boolean

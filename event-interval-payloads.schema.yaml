@@ -1,0 +1,469 @@
+$id: "./event-interval-payloads.schema.json"
+title: "Event-Interval-Payloads"
+description: "Payload types available for Event intervals"
+$comment: |
+    Schema for OpenADR 3 Event interval payload types.
+    This schema provides the definitions in the
+    Event Enumerations table in Definition.md.
+
+    This file is released under the Apache 2.0 license.
+    Read more at: http://www.apache.org/licenses/LICENSE-2.0.html
+
+definitions:
+    SIMPLE:
+        $id: 'event-interval-payloads.schema.json#/definitions/SIMPLE'
+        description: |
+            An indication of the level of a basic demand response signal. Payload
+            value is an integer of 0, 1, 2, or 3.
+            Note: An example mapping is normal operations, moderate load shed,
+            high load shed, and emergency load shed.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: integer
+            minimum: 0
+            maximum: 3
+    PRICE:
+        $id: 'event-interval-payloads.schema.json#/definitions/PRICE'
+        description: |
+            The price of energy. Payload value is a float. Units and currency
+            defined in associated eventPayloadDescriptor.
+            Note: Can be used for any form of energy.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+    PRICE_ALTERNATE:
+        $id: 'event-interval-payloads.schema.json#/definitions/PRICE_ALTERNATE'
+        description: |
+            The price of a second form of energy, as defined by the program.
+            Payload value is a float. Units and currency
+            defined in associated eventPayloadDescriptor.
+            Note: Can be used for any form of energy.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+    CHARGE_STATE_SETPOINT:
+        $id: 'event-interval-payloads.schema.json#/definitions/CHARGE_STATE_SETPOINT'
+        description: |
+            The state of charge of an energy storage resource. Payload value is
+            indicated by units in associated eventPayloadDescriptor.
+            Note: Common units are percentage and kWh.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+            minimum: 0
+    DISPATCH_SETPOINT:
+        $id: 'event-interval-payloads.schema.json#/definitions/DISPATCH_SETPOINT'
+        description: |
+            The absolute amount of consumption by a resource. Payload value is
+            a float and is indicated by units in associated eventPayloadDescriptor.
+            Note: This is used to dispatch resources.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+            minimum: 0
+    DISPATCH_SETPOINT_RELATIVE:
+        $id: 'event-interval-payloads.schema.json#/definitions/DISPATCH_SETPOINT_RELATIVE'
+        description: |
+            The relative change of consumption by a resource. Payload value is a
+            float and is indicated by units in associated eventPayloadDescriptor.
+            Note: This is used to dispatch a resource's load.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+    DISPATCH_INSTRUCTION:
+        $id: 'event-interval-payloads.schema.json#/definitions/DISPATCH_INSTRUCTION'
+        description: |
+            Implementation-specific instructions that can be mapped to resource-specific
+            control actions by VEN clients. Applicable values are communicated out of
+            band by VTN administrators.
+        type: array
+        minItems: 1
+        items:
+            type: string
+            minLength: 1
+            maxLength: 128
+    CONTROL_SETPOINT:
+        $id: 'event-interval-payloads.schema.json#/definitions/CONTROL_SETPOINT'
+        description: |
+            Resource dependent setting, generally used for
+            device control instructions. Payload value type depends on
+            application. The actual values to be used in this
+            payload will be defined by program providers.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            oneOf:
+                - type: number
+                - type: integer
+                - type: string
+                  minLength: 1
+                  maxLength: 128
+                - type: boolean
+                - $ref: '#/components/schemas/point'
+
+    CONTROL_LEVEL_OFFSET:
+        $id: 'event-interval-payloads.schema.json#/definitions/CONTROL_LEVEL_OFFSET'
+        description: |
+            Discrete integer levels that are relative to normal operations where 0 is normal operations.
+            There is no requirement to link the setpoints to specific load consumption values,
+            but the intention is that the higher the setpoint the less load is consumed
+            (where negative values would indicate higher load consumption).
+            Payload value is an integer between -10 and +10 with no units.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: integer
+            minimum: -10
+            maximum: 10
+
+    CONTROL_LEVEL_OFFSET_PERCENT:
+        $id: 'event-interval-payloads.schema.json#/definitions/CONTROL_LEVEL_OFFSET_PERCENT'
+        description: |
+            Percentage change from normal operations, where 0 is normal operations.
+            The percentage does not refer to specific load consumptions values,
+            but to load control operation levels. The lower the percentage the less load
+            is consumed. Negative values indicate higher load consumption.
+            Common payload values are floats from -1.0 to 1.0 with units of PERCENT, set
+            in associated eventPayloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+            minimum: -1
+            maximum: 1
+
+    EXPORT_PRICE:
+        $id: 'event-interval-payloads.schema.json#/definitions/EXPORT_PRICE'
+        description: |
+            The price of energy exported (usually to the grid). Payload value is
+            float and units and currency are defined in associated
+            eventPayloadDescriptor.
+            Note: Can be used for any form of energy.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+    GHG:
+        $id: 'event-interval-payloads.schema.json#/definitions/GHG'
+        description: |
+            An estimate of marginal GreenHouse Gas emissions, in g/kWh.
+            Payload value is float.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+            minimum: 0
+    CURVE:
+        $id: 'event-interval-payloads.schema.json#/definitions/CURVE'
+        description: |
+            A series of one or more Point objects representing a 2D curve
+            drawn on an x/y graph. The typical use is to represent
+            a VoltVar or VoltWatt curve for customizing inverter control.
+        type: array
+        items:
+            type: array
+            minItems: 1
+            items:
+                $ref: '#/components/schemas/point'
+
+    OLS:
+        $id: 'event-interval-payloads.schema.json#/definitions/OLS'
+        description: |
+            Optimum Load Shape. Payload values array contains a list of values
+            0.0 to 1.0 representing percentage of usage over the set of intervals in
+            the event.
+            Note: See ANSI-SCTE 267.
+        type: array
+        items:
+            type: number
+            minimum: 0
+            maximum: 1
+    IMPORT_CAPACITY_SUBSCRIPTION:
+        $id: 'event-interval-payloads.schema.json#/definitions/IMPORT_CAPACITY_SUBSCRIPTION'
+        description: |
+            The amount of import capacity a customer has subscribed to in
+            advance. Payload is a float, and meaning is indicated by units in
+            associated eventPayloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+            minimum: 0
+    IMPORT_CAPACITY_RESERVATION:
+        $id: 'event-interval-payloads.schema.json#/definitions/IMPORT_CAPACITY_RESERVATION'
+        description: |
+            The amount of additional import capacity that a customer has been
+            granted by the VTN. Payload is a float, and meaning is indicated by
+            units in associated eventPayloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+            minimum: 0
+    IMPORT_CAPACITY_RESERVATION_FEE:
+        $id: 'event-interval-payloads.schema.json#/definitions/IMPORT_CAPACITY_RESERVATION_FEE'
+        description: |
+            The cost per unit of power of extra import capacity available for
+            reservation. Payload is a float, and meaning is indicated by units in
+            associated eventPayloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+    IMPORT_CAPACITY_AVAILABLE:
+        $id: 'event-interval-payloads.schema.json#/definitions/IMPORT_CAPACITY_AVAILABLE'
+        description: |
+            The amount of extra import capacity available for reservation to the
+            customer. Payload is a float, and meaning is indicated by units in
+            associated eventPayloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+    IMPORT_CAPACITY_AVAILABLE_PRICE:
+        $id: 'event-interval-payloads.schema.json#/definitions/IMPORT_CAPACITY_AVAILABLE_PRICE'
+        description: |
+            The cost per unit of power of extra import capacity available for
+            reservation. Payload is a float, and meaning is indicated by units in
+            associated eventPayloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+    EXPORT_CAPACITY_SUBSCRIPTION:
+        $id: 'event-interval-payloads.schema.json#/definitions/EXPORT_CAPACITY_SUBSCRIPTION'
+        description: |
+            The amount of export capacity a customer has subscribed to in
+            advance. Payload is a float, and meaning is indicated by units in
+            associated eventPayloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+    EXPORT_CAPACITY_RESERVATION:
+        $id: 'event-interval-payloads.schema.json#/definitions/EXPORT_CAPACITY_RESERVATION'
+        description: |
+            The amount of additional export capacity that a customer has been
+            granted by the VTN. Payload is a float, and meaning is indicated by
+            units in associated eventPayloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+            minimum: 0
+    EXPORT_CAPACITY_RESERVATION_FEE:
+        $id: 'event-interval-payloads.schema.json#/definitions/EXPORT_CAPACITY_RESERVATION_FEE'
+        description: |
+            The cost per unit of power of extra export capacity available for
+            reservation. Payload is a float, and meaning is indicated by units in
+            associated eventPayloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+    EXPORT_CAPACITY_AVAILABLE:
+        $id: 'event-interval-payloads.schema.json#/definitions/EXPORT_CAPACITY_AVAILABLE'
+        description: |
+            The amount of extra export capacity available for reservation to the
+            customer. Payload is a float, and meaning is indicated by units in
+            associated eventPayloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+    EXPORT_CAPACITY_AVAILABLE_PRICE:
+        $id: 'event-interval-payloads.schema.json#/definitions/EXPORT_CAPACITY_AVAILABLE_PRICE'
+        description: |
+            The cost per unit of power of extra export capacity available for
+            reservation. Payload is a float, and meaning is indicated by units in
+            associated eventPayloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+    IMPORT_CAPACITY_LIMIT:
+        $id: 'event-interval-payloads.schema.json#/definitions/IMPORT_CAPACITY_LIMIT'
+        description: |
+            The maximum import level for the site. Payload is a float and meaning
+            is indicated by units in associated eventPayloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+            minimum: 0
+    EXPORT_CAPACITY_LIMIT:
+        $id: 'event-interval-payloads.schema.json#/definitions/EXPORT_CAPACITY_LIMIT'
+        description: |
+            The maximum export level for the site. Payload is a float and meaning
+            is indicated by units in associated eventPayloadDescriptor.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
+            minimum: 0
+    ALERT_GRID_EMERGENCY:
+        $id: 'event-interval-payloads.schema.json#/definitions/ALERT_GRID_EMERGENCY'
+        description: |
+            There is an imminent risk of the grid failing to continue supplying
+            power to some customers, maintaining operational parameters (e.g.
+            voltage), or ceasing to operate at all. Payload value contains a
+            human-readable string describing the alert.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: string
+            minLength: 1
+            maxLength: 128
+    ALERT_BLACK_START:
+        $id: 'event-interval-payloads.schema.json#/definitions/ALERT_BLACK_START'
+        description: |
+            The grid is in the process of resuming full operation. Devices should
+            minimize electricity use until the event is cleared. Payload value
+            contains a human-readable string describing the alert.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: string
+    ALERT_POSSIBLE_OUTAGE:
+        $id: 'event-interval-payloads.schema.json#/definitions/ALERT_POSSIBLE_OUTAGE'
+        description: |
+            Customers may lose grid power in the coming hours or days.
+            Note: An example of this from California is Public Service Power
+            Shutoffs (usually from fire risk). Payload value contains a
+            human-readable string describing the alert.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: string
+    ALERT_FLEX_ALERT:
+        $id: 'event-interval-payloads.schema.json#/definitions/ALERT_FLEX_ALERT'
+        description: |
+            Power supply will be scarce during the event. Devices should seek to
+            shift load to times before or after the event. Devices that can shed
+            should do so during the event. Payload value contains a
+            human-readable string describing the alert.
+            Note: See: flexalert.org
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: string
+    ALERT_FIRE:
+        $id: 'event-interval-payloads.schema.json#/definitions/ALERT_FIRE'
+        description: |
+            There is a substantial risk of fire in the area which could interrupt
+            electricity supply in addition to being a danger to life and property.
+            Payload value contains a human-readable string describing the alert.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: string
+    ALERT_FREEZING:
+        $id: 'event-interval-payloads.schema.json#/definitions/ALERT_FREEZING'
+        description: |
+            There is (or is forecast to be) temperatures low enough to be of
+            concern. Payload value contains a human-readable string describing
+            the alert.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: string
+    ALERT_WIND:
+        $id: 'event-interval-payloads.schema.json#/definitions/ALERT_WIND'
+        description: |
+            There is (or is forecast to be) wind speeds high enough to be of
+            concern. Includes hurricanes. Payload value contains a
+            human-readable string describing the alert.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: string
+    ALERT_TSUNAMI:
+        $id: 'event-interval-payloads.schema.json#/definitions/ALERT_TSUNAMI'
+        description: |
+            Tsunami waves expected to hit the coastline. Payload value contains a
+            human-readable string describing the alert.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: string
+    ALERT_AIR_QUALITY:
+        $id: 'event-interval-payloads.schema.json#/definitions/ALERT_AIR_QUALITY'
+        description: |
+            Air quality is or is forecast to be. Payload value contains a
+            human-readable string describing the alert.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: string
+    ALERT_OTHER:
+        $id: 'event-interval-payloads.schema.json#/definitions/ALERT_OTHER'
+        description: |
+            No specific definition. See associated text data element. Payload value
+            contains a human-readable string describing the alert.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: string
+    CTA2045_REBOOT:
+        $id: 'event-interval-payloads.schema.json#/definitions/CTA2045_REBOOT'
+        description: |
+            Pass through for resources that support [CTA-2045B]. Payload value 0
+            = SOFT, 1 = HARD. See [CTA-2045B] for definitions.
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: integer
+            minimum: 0
+            maximum: 1
+    CTA2045_SET_OVERRIDE_STATUS:
+        $id: 'event-interval-payloads.schema.json#/definitions/CTA2045_SET_OVERRIDE_STATUS'
+        description: |
+            Pass through CTA-2045 Override status: 0 = No Override, 1 =
+            Override. See [CTA-2045B].
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: integer
+            minimum: 0
+            maximum: 1
