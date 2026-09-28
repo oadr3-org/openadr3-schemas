@@ -1,0 +1,9 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "./ADVISOR_resource_request.schema.yaml"
+title: "ADVISOR OpenADR VEN Resource Request"
+description: |
+    Entry-point schema for validating an ADVISOR resource creation request.
+    The referenced profile validates the OpenADR VEN resource structure and
+    the ADVISOR-specific attributes, required parameters, dependencies, and
+    duplicate-type rules.
+$ref: "./ADVISOR_DER_attributes.yaml#/definitions/ADVISOR_VEN_RESOURCE_REQUEST"

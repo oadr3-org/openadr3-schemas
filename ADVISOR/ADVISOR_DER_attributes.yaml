@@ -1,0 +1,1124 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "./ADVISOR_DER_attributes.schema.json"
+title: "ADVISOR DER Attributes"
+description: "ADVISOR-defined attributes of ven and resource objects"
+$comment: |
+    Schema for ADVISOR ven and resource attributes.
+
+    This file is released under the Apache 2.0 license.
+    Read more at: http://www.apache.org/licenses/LICENSE-2.0.html
+
+definitions:
+    NUM_DEVICES_REPRESENTED :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/NUM_DEVICES_REPRESENTED'
+        description: |
+            An integer from 1 to N representing the number of devices included in the reported device or cluster.
+        type: integer
+        minimum: 1
+
+    DEVICE_TYPE :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/DEVICE_TYPE'
+        description: |
+            Multi-list of device types represented, such as thermostats, water heaters, EVSE, solar, battery energy storage, pumps, lighting control, HEMS/BEMS, other, or similar DER types.
+        type: string
+        enum:
+          [
+            THERMOSTAT_UNKNOWN_SYSTEM,
+            THERMOSTAT_COOLING_ONLY,
+            THERMOSTAT_HEAT_PUMP_SYSTEM,
+            WATER_HEATER,
+            EVSE_LEVEL_1,
+            EVSE_LEVEL_2,
+            EVSE_LEVEL_3,
+            SOLAR,
+            BATTERY_ENERGY_STORAGE_LITHIUM_ION,
+            POOL_PUMP,
+            IRRIGATION_PUMP,
+            LIGHTING_CONTROL,
+            HEMS_BEMS,
+            OTHER
+          ]
+
+    FACILITY_TYPE:
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/FACILITY_TYPE'
+        description: |
+            Facility type where resources are are installed.
+        type: string
+        enum:
+          [
+            RESIDENTIAL,
+            COMMERCIAL,
+            INDUSTRIAL,
+            DEDICATED DER SITE
+          ]
+
+    LAT_LON_ACCURACY :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/LAT_LON_ACCURACY'
+        description: |
+            Accuracy of the latitude and longitude information provided in the dataset.
+        type: string
+        enum:
+          [
+            EXACT,
+            APPROXIMATE
+          ]
+
+    LATITUDE :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/LATITUDE'
+        description: |
+            DER latitude, used when information is uploaded for a single DER.
+        type: number
+        minimum: -180
+        maximum: 180
+
+    LONGITUDE :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/LONGITUDE'
+        description: |
+            DER longitude, used when information is uploaded for a single DER.
+        type: number
+        minimum: -180
+        maximum: 180
+
+    MIN_LATITUDE :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/MIN_LATITUDE'
+        description: |
+            Smallest latitude value of the represented DER, used when information is uploaded for a DER cluster.
+        type: number
+        minimum: -180
+        maximum: 180
+
+    MAX_LATITUDE :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/MAX_LATITUDE'
+        description: |
+            Largest latitude value of the represented DER, used when information is uploaded for a DER cluster.
+        type: number
+        minimum: -180
+        maximum: 180
+
+    MIN_LONGITUDE :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/MIN_LONGITUDE'
+        description: |
+            Smallest longitude value of the represented DER, used when information is uploaded for a DER cluster.
+        type: number
+        minimum: -180
+        maximum: 180
+
+    MAX_LONGITUDE :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/MAX_LONGITUDE'
+        description: |
+            Largest longitude value of the represented DER, used when information is uploaded for a DER cluster.
+        type: number
+        minimum: -180
+        maximum: 180
+
+    SERVICE_CAPABILITY_TYPE :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/SERVICE_CAPABILITY_TYPE'
+        description: |
+            Type of service capability: active power, reactive power, or both.
+        type: string
+        enum:
+          [
+            ACTIVE_POWER,
+            REACTIVE_POWER
+          ]
+
+    MAX_GENUP_LOADDOWN :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/MAX_GENUP_LOADDOWN'
+        description: |
+            Maximum controllable active power (watts) that the resources can provide for a Generation Up / Load Down service, measured as an unsigned shift from baseline.
+        type: number
+        minimum: 0
+
+    MAX_LOADUP_GENDOWN :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/MAX_LOADUP_GENDOWN'
+        description: |
+            Maximum controllable active power (watts) that the resources can provide for a Load Up / Generation Down service, measured as an unsigned shift from baseline.
+        type: number
+        minimum: 0
+
+    MAX_VAR_INJUP_ABSDOWN :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/MAX_VAR_INJUP_ABSDOWN'
+        description: |
+            Maximum controllable reactive power (vars) that the resources can provide for a Var Injection Up / Absorption Down service, measured as an unsigned shift from baseline.
+        type: number
+        minimum: 0
+
+    MAX_VAR_ABSUP_INJDOWN :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/MAX_VAR_ABSUP_INJDOWN'
+        description: |
+            Maximum controllable reactive power (vars) that the resources can provide for a Var Absorption Up / Injection Down service, measured as an unsigned shift from baseline.
+        type: number
+        minimum: 0
+
+    ADVANCE_NOTIFICATION_REQUIRED :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVANCE_NOTIFICATION_REQUIRED'
+        description: |
+            Indicates whether a group formed from the represented devices is expected to require advance notice before it can provide a scheduled service.
+        type: boolean
+
+    MIN_ADVANCE_NOTIFICATION_TIME :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/MIN_ADVANCE_NOTIFICATION_TIME'
+        description: |
+            Minimum advance notification time (seconds) required before the start of a scheduled service.
+        type: integer
+        minimum: 0
+
+    RAMP_RATE_ADJUSTABILITY :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/RAMP_RATE_ADJUSTABILITY'
+        description: |
+            Indicates whether a group formed from the represented devices can support managed ramping behavior, such as ramp up, ramp down, neither, or both.
+        type: string
+        enum:
+          [
+            RAMP_UP_MANAGEABLE,
+            RAMP_DOWN_MANAGEABLE,
+            NEITHER,
+            BOTH
+          ]
+
+    RAMP_MIN_ADJUSTABLE_RATE :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/RAMP_MIN_ADJUSTABLE_RATE'
+        description: |
+            Slowest ramp rate (%/second) at which a group formed from the represented device type could be managed; not applicable if ramp_rate_adjustability is neither.
+        type: number
+        minimum: 0
+
+    RAMP_MAX_ADJUSTABLE_RATE :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/RAMP_MAX_ADJUSTABLE_RATE'
+        description: |
+            Fastest ramp rate (%/second) at which a group formed from the represented device type could be managed; not applicable if ramp_rate_adjustability is neither.
+        type: number
+        minimum: 0
+
+    MAX_GENUP_LOADDOWN_DURATION :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/MAX_GENUP_LOADDOWN_DURATION'
+        description: |
+            Maximum time (seconds) that a group formed from the represented device type can sustain max_genup_loaddown service before needing to ramp down.
+        type: integer
+        minimum: 0
+
+    MAX_GENDOWN_LOADUP_DURATION :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/MAX_GENDOWN_LOADUP_DURATION'
+        description: |
+            Maximum time (seconds) that a group formed from the represented device type can sustain the corresponding Generation Down / Load Up active power service before needing to ramp down.
+        type: integer
+        minimum: 0
+
+    MAX_VAR_INJUP_ABSDOWN_DURATION :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/MAX_VAR_INJUP_ABSDOWN_DURATION'
+        description: |
+            Maximum time (seconds) that a group formed from the represented device type can sustain max_var_injup_absdown before needing to ramp down.
+        type: integer
+        minimum: 0
+
+    MAX_VAR_ABSUP_INJDOWN_DURATION :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/MAX_VAR_ABSUP_INJDOWN_DURATION'
+        description: |
+            Maximum time (seconds) that a group formed from the represented device type can sustain max_var_absup_injdown before needing to ramp down.
+        type: integer
+        minimum: 0
+
+    REQUIRED_RECOVERY_TIME :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/REQUIRED_RECOVERY_TIME'
+        description: |
+            Time (seconds) required after a service call of maximum magnitude and duration before the group can respond again at full magnitude and duration.
+        type: integer
+        minimum: 0
+
+    AVAILABLE_MONTHS :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/AVAILABLE_MONTHS'
+        description: |
+            List of months when services from a group formed from this device type may be available.
+        type: string
+        enum:
+          [
+            JAN,
+            FEB,
+            MAR,
+            APR,
+            MAY,
+            JUN,
+            JUL,
+            AUG,
+            SEP,
+            OCT,
+            NOV,
+            DEC
+          ]
+
+    AVAILABLE_HOURS_WEEKDAY :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/AVAILABLE_HOURS_WEEKDAY'
+        description: |
+            Weekday time windows when a group formed from this device type may be able to respond, represented as a list of start-end ranges using a 24-hour clock. Time windows should not overlap.
+        type: string
+        pattern: '^([01]?[0-9]|2[0-3]):[0-5][0-9]-([01]?[0-9]|2[0-3]):[0-5][0-9]$'
+
+    AVAILABLE_HOURS_WEEKEND :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/AVAILABLE_HOURS_WEEKEND'
+        description: |
+            Weekend time window when a group formed from this device type may be able to respond, represented as a start-end range using a 24-hour clock.
+        type: string
+        pattern: '^([01]?[0-9]|2[0-3]):[0-5][0-9]-([01]?[0-9]|2[0-3]):[0-5][0-9]$'
+
+    SEASONAL_VARIABILITY :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/SEASONAL_VARIABILITY'
+        description: |
+            Indicates whether the group's availability pattern changes by season.
+        type: boolean
+
+    CALLS_PER_WEEK :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/CALLS_PER_WEEK'
+        description: |
+            Maximum number of separate dispatches a group formed from this device type may be able to support within a seven-day period.
+        type: integer
+        minimum: 0
+
+    COMMUNICATION_STATUS :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/COMMUNICATION_STATUS'
+        description: |
+            Multi-list indicating whether the devices are installed but not communication-connected, communication-connected, or otherwise characterized by connection status.
+        type: string
+        enum:
+          [
+            DEVICES_INSTALLED_NOT_COMMUNICATION_CONNECTED,
+            DEVICES_COMMUNICATION_CONNECTED
+          ]
+
+    CONSUMER_STATUS :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/CONSUMER_STATUS'
+        description: |
+            Multi-list indicating whether consumers have expressed interest in grid service programs or are participating in grid service programs.
+        type: string
+        enum:
+          [
+            CONSUMER_EXPRESSED_INTEREST_IN_GRID_SERVICE_PROGRAMS_NOT_PARTICIPATING,
+            CONSUMER_PARTICIPATING_IN_GRID_SERVICE_PROGRAMS
+          ]
+
+    AVAILABLE_ACCESS_METHODS :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/AVAILABLE_ACCESS_METHODS'
+        description: |
+            Multi-list of available access methods, such as direct device access, access through a manufacturer or aggregator, or access through a third-party aggregator.
+        type: string
+        enum:
+          [
+            DIRECT_ACCESS_TO_DEVICE_AVAILABLE,
+            ACCESS_THROUGH_MANUFACTURER_AGGREGATOR_AVAILABLE,
+            ACCESS_THROUGH_THIRD_PARTY_AGGREGATOR_AVAILABLE
+          ]
+
+    COMMUNICATION_NETWORK :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/COMMUNICATION_NETWORK'
+        description: |
+            Communication network used when connected, such as consumer-provided internet or cellular.
+        type: string
+        enum:
+          [
+            CONSUMER_PROVIDED_INTERNET,
+            CELLULAR
+          ]
+
+    DEVICE_LEVEL_PROTOCOL :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/DEVICE_LEVEL_PROTOCOL'
+        description: |
+            Device-level communication protocol, such as OpenADR 2.0b, OpenADR 3.0, IEEE 2030.5, CTA-2045 Modular Interface Port, proprietary/vendor-defined, other, or not applicable.
+        type: string
+        enum:
+          [
+            NOT_APPLICABLE,
+            OPENADR_2_0B,
+            OPENADR_3_0,
+            OPENADR_3_1,
+            IEEE_2030_5,
+            CTA_2045_MODULAR_INTERFACE_PORT,
+            PROPRIETARY_VENDOR_DEFINED,
+            OTHER
+          ]
+
+    AGGREGATOR_VPP_LEVEL_PROTOCOL :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/AGGREGATOR_VPP_LEVEL_PROTOCOL'
+        description: |
+            Aggregator or VPP-level protocol, such as OpenADR 2.0b, OpenADR 3.0, IEEE 2030.5, proprietary/vendor-defined API, other, or not applicable.
+        type: string
+        enum:
+          [
+            NOT_APPLICABLE,
+            OPENADR_2_0B,
+            OPENADR_3_0,
+            OPENADR_3_1,
+            IEEE_2030_5,
+            CTA_2045_MODULAR_INTERFACE_PORT,
+            PROPRIETARY_VENDOR_DEFINED,
+            OTHER
+          ]
+
+    ADVISOR_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_VALUES_MAP'
+        description: |
+            Base structure for an ADVISOR attribute represented as an OpenADR valuesMap.
+        type: object
+        required:
+            - type
+            - values
+        properties:
+            type:
+                type: string
+            values:
+                type: array
+                minItems: 1
+
+    ADVISOR_DEVICE_TYPE_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_DEVICE_TYPE_VALUES_MAP'
+        description: |
+            One or more device types in a flat OpenADR values array.
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_DEVICE_TYPE]
+                values:
+                    uniqueItems: true
+                    items:
+                        $ref: '#/definitions/DEVICE_TYPE'
+
+    ADVISOR_FACILITY_TYPE_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_FACILITY_TYPE_VALUES_MAP'
+        description: |
+            One or more facility types in a flat OpenADR values array.
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_FACILITY_TYPE]
+                values:
+                    uniqueItems: true
+                    items:
+                        $ref: '#/definitions/FACILITY_TYPE'
+
+    ADVISOR_SERVICE_CAPABILITY_TYPE_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_SERVICE_CAPABILITY_TYPE_VALUES_MAP'
+        description: |
+            One or more service capability types in a flat OpenADR values array.
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_SERVICE_CAPABILITY_TYPE]
+                values:
+                    uniqueItems: true
+                    items:
+                        $ref: '#/definitions/SERVICE_CAPABILITY_TYPE'
+
+    ADVISOR_AVAILABLE_MONTHS_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_AVAILABLE_MONTHS_VALUES_MAP'
+        description: |
+            One or more available months in a flat OpenADR values array.
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_AVAILABLE_MONTHS]
+                values:
+                    uniqueItems: true
+                    items:
+                        $ref: '#/definitions/AVAILABLE_MONTHS'
+
+    ADVISOR_AVAILABLE_HOURS_WEEKDAY_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_AVAILABLE_HOURS_WEEKDAY_VALUES_MAP'
+        description: |
+            One or more weekday availability windows in a flat OpenADR values array.
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_AVAILABLE_HOURS_WEEKDAY]
+                values:
+                    uniqueItems: true
+                    items:
+                        $ref: '#/definitions/AVAILABLE_HOURS_WEEKDAY'
+
+    ADVISOR_COMMUNICATION_STATUS_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_COMMUNICATION_STATUS_VALUES_MAP'
+        description: |
+            One or more communication statuses in a flat OpenADR values array.
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_COMMUNICATION_STATUS]
+                values:
+                    uniqueItems: true
+                    items:
+                        $ref: '#/definitions/COMMUNICATION_STATUS'
+
+    ADVISOR_CONSUMER_STATUS_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_CONSUMER_STATUS_VALUES_MAP'
+        description: |
+            One or more consumer statuses in a flat OpenADR values array.
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_CONSUMER_STATUS]
+                values:
+                    uniqueItems: true
+                    items:
+                        $ref: '#/definitions/CONSUMER_STATUS'
+
+    ADVISOR_AVAILABLE_ACCESS_METHODS_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_AVAILABLE_ACCESS_METHODS_VALUES_MAP'
+        description: |
+            One or more available access methods in a flat OpenADR values array.
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_AVAILABLE_ACCESS_METHODS]
+                values:
+                    uniqueItems: true
+                    items:
+                        $ref: '#/definitions/AVAILABLE_ACCESS_METHODS'
+
+    ADVISOR_NUM_DEVICES_REPRESENTED_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_NUM_DEVICES_REPRESENTED_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_NUM_DEVICES_REPRESENTED]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/NUM_DEVICES_REPRESENTED'
+
+    ADVISOR_LAT_LON_ACCURACY_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_LAT_LON_ACCURACY_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_LAT_LON_ACCURACY]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/LAT_LON_ACCURACY'
+
+    ADVISOR_LATITUDE_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_LATITUDE_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_LATITUDE]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/LATITUDE'
+
+    ADVISOR_LONGITUDE_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_LONGITUDE_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_LONGITUDE]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/LONGITUDE'
+
+    ADVISOR_MIN_LATITUDE_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_MIN_LATITUDE_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_MIN_LATITUDE]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/MIN_LATITUDE'
+
+    ADVISOR_MAX_LATITUDE_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_MAX_LATITUDE_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_MAX_LATITUDE]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/MAX_LATITUDE'
+
+    ADVISOR_MIN_LONGITUDE_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_MIN_LONGITUDE_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_MIN_LONGITUDE]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/MIN_LONGITUDE'
+
+    ADVISOR_MAX_LONGITUDE_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_MAX_LONGITUDE_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_MAX_LONGITUDE]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/MAX_LONGITUDE'
+
+    ADVISOR_MAX_GENUP_LOADDOWN_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_MAX_GENUP_LOADDOWN_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_MAX_GENUP_LOADDOWN]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/MAX_GENUP_LOADDOWN'
+
+    ADVISOR_MAX_LOADUP_GENDOWN_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_MAX_LOADUP_GENDOWN_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_MAX_LOADUP_GENDOWN]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/MAX_LOADUP_GENDOWN'
+
+    ADVISOR_MAX_VAR_INJUP_ABSDOWN_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_MAX_VAR_INJUP_ABSDOWN_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_MAX_VAR_INJUP_ABSDOWN]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/MAX_VAR_INJUP_ABSDOWN'
+
+    ADVISOR_MAX_VAR_ABSUP_INJDOWN_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_MAX_VAR_ABSUP_INJDOWN_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_MAX_VAR_ABSUP_INJDOWN]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/MAX_VAR_ABSUP_INJDOWN'
+
+    ADVISOR_ADVANCE_NOTIFICATION_REQUIRED_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_ADVANCE_NOTIFICATION_REQUIRED_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_ADVANCE_NOTIFICATION_REQUIRED]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/ADVANCE_NOTIFICATION_REQUIRED'
+
+    ADVISOR_MIN_ADVANCE_NOTIFICATION_TIME_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_MIN_ADVANCE_NOTIFICATION_TIME_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_MIN_ADVANCE_NOTIFICATION_TIME]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/MIN_ADVANCE_NOTIFICATION_TIME'
+
+    ADVISOR_RAMP_RATE_ADJUSTABILITY_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_RAMP_RATE_ADJUSTABILITY_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_RAMP_RATE_ADJUSTABILITY]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/RAMP_RATE_ADJUSTABILITY'
+
+    ADVISOR_RAMP_MIN_ADJUSTABLE_RATE_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_RAMP_MIN_ADJUSTABLE_RATE_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_RAMP_MIN_ADJUSTABLE_RATE]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/RAMP_MIN_ADJUSTABLE_RATE'
+
+    ADVISOR_RAMP_MAX_ADJUSTABLE_RATE_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_RAMP_MAX_ADJUSTABLE_RATE_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_RAMP_MAX_ADJUSTABLE_RATE]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/RAMP_MAX_ADJUSTABLE_RATE'
+
+    ADVISOR_MAX_GENUP_LOADDOWN_DURATION_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_MAX_GENUP_LOADDOWN_DURATION_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_MAX_GENUP_LOADDOWN_DURATION]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/MAX_GENUP_LOADDOWN_DURATION'
+
+    ADVISOR_MAX_GENDOWN_LOADUP_DURATION_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_MAX_GENDOWN_LOADUP_DURATION_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_MAX_GENDOWN_LOADUP_DURATION]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/MAX_GENDOWN_LOADUP_DURATION'
+
+    ADVISOR_MAX_VAR_INJUP_ABSDOWN_DURATION_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_MAX_VAR_INJUP_ABSDOWN_DURATION_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_MAX_VAR_INJUP_ABSDOWN_DURATION]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/MAX_VAR_INJUP_ABSDOWN_DURATION'
+
+    ADVISOR_MAX_VAR_ABSUP_INJDOWN_DURATION_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_MAX_VAR_ABSUP_INJDOWN_DURATION_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_MAX_VAR_ABSUP_INJDOWN_DURATION]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/MAX_VAR_ABSUP_INJDOWN_DURATION'
+
+    ADVISOR_REQUIRED_RECOVERY_TIME_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_REQUIRED_RECOVERY_TIME_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_REQUIRED_RECOVERY_TIME]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/REQUIRED_RECOVERY_TIME'
+
+    ADVISOR_AVAILABLE_HOURS_WEEKEND_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_AVAILABLE_HOURS_WEEKEND_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_AVAILABLE_HOURS_WEEKEND]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/AVAILABLE_HOURS_WEEKEND'
+
+    ADVISOR_SEASONAL_VARIABILITY_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_SEASONAL_VARIABILITY_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_SEASONAL_VARIABILITY]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/SEASONAL_VARIABILITY'
+
+    ADVISOR_CALLS_PER_WEEK_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_CALLS_PER_WEEK_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_CALLS_PER_WEEK]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/CALLS_PER_WEEK'
+
+    ADVISOR_COMMUNICATION_NETWORK_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_COMMUNICATION_NETWORK_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_COMMUNICATION_NETWORK]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/COMMUNICATION_NETWORK'
+
+    ADVISOR_DEVICE_LEVEL_PROTOCOL_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_DEVICE_LEVEL_PROTOCOL_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_DEVICE_LEVEL_PROTOCOL]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/DEVICE_LEVEL_PROTOCOL'
+
+    ADVISOR_AGGREGATOR_VPP_LEVEL_PROTOCOL_VALUES_MAP :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_AGGREGATOR_VPP_LEVEL_PROTOCOL_VALUES_MAP'
+        allOf:
+            - $ref: '#/definitions/ADVISOR_VALUES_MAP'
+            - properties:
+                type:
+                    enum: [ADVISOR_AGGREGATOR_VPP_LEVEL_PROTOCOL]
+                values:
+                    maxItems: 1
+                    items:
+                        $ref: '#/definitions/AGGREGATOR_VPP_LEVEL_PROTOCOL'
+
+    ADVISOR_VEN_RESOURCE_REQUEST :
+        $id: 'ADVISOR_DER_attributes.schema.json#/definitions/ADVISOR_VEN_RESOURCE_REQUEST'
+        description: |
+            OpenADR VEN resource request with required and conditional ADVISOR attributes.
+        allOf:
+            - $ref: '1_OpenADR_3.1.0_20250801.yaml#/components/schemas/VenResourceRequest'
+            - type: object
+              required:
+                - objectType
+                - resourceName
+                - venID
+                - attributes
+              properties:
+                attributes:
+                    type: array
+                    items:
+                        oneOf:
+                            - $ref: '#/definitions/ADVISOR_NUM_DEVICES_REPRESENTED_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_DEVICE_TYPE_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_FACILITY_TYPE_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_LAT_LON_ACCURACY_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_LATITUDE_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_LONGITUDE_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_MIN_LATITUDE_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_MAX_LATITUDE_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_MIN_LONGITUDE_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_MAX_LONGITUDE_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_SERVICE_CAPABILITY_TYPE_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_MAX_GENUP_LOADDOWN_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_MAX_LOADUP_GENDOWN_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_MAX_VAR_INJUP_ABSDOWN_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_MAX_VAR_ABSUP_INJDOWN_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_ADVANCE_NOTIFICATION_REQUIRED_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_MIN_ADVANCE_NOTIFICATION_TIME_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_RAMP_RATE_ADJUSTABILITY_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_RAMP_MIN_ADJUSTABLE_RATE_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_RAMP_MAX_ADJUSTABLE_RATE_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_MAX_GENUP_LOADDOWN_DURATION_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_MAX_GENDOWN_LOADUP_DURATION_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_MAX_VAR_INJUP_ABSDOWN_DURATION_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_MAX_VAR_ABSUP_INJDOWN_DURATION_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_REQUIRED_RECOVERY_TIME_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_AVAILABLE_MONTHS_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_AVAILABLE_HOURS_WEEKDAY_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_AVAILABLE_HOURS_WEEKEND_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_SEASONAL_VARIABILITY_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_CALLS_PER_WEEK_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_COMMUNICATION_STATUS_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_CONSUMER_STATUS_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_AVAILABLE_ACCESS_METHODS_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_COMMUNICATION_NETWORK_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_DEVICE_LEVEL_PROTOCOL_VALUES_MAP'
+                            - $ref: '#/definitions/ADVISOR_AGGREGATOR_VPP_LEVEL_PROTOCOL_VALUES_MAP'
+            - properties:
+                attributes:
+                    allOf:
+                        - contains: {properties: {type: {enum: [ADVISOR_NUM_DEVICES_REPRESENTED]}}}
+                        - contains: {properties: {type: {enum: [ADVISOR_DEVICE_TYPE]}}}
+                        - contains: {properties: {type: {enum: [ADVISOR_FACILITY_TYPE]}}}
+                        - contains: {properties: {type: {enum: [ADVISOR_LAT_LON_ACCURACY]}}}
+                        - contains: {properties: {type: {enum: [ADVISOR_SERVICE_CAPABILITY_TYPE]}}}
+                        - contains: {properties: {type: {enum: [ADVISOR_MAX_GENUP_LOADDOWN]}}}
+                        - contains: {properties: {type: {enum: [ADVISOR_MAX_LOADUP_GENDOWN]}}}
+                        - contains: {properties: {type: {enum: [ADVISOR_ADVANCE_NOTIFICATION_REQUIRED]}}}
+                        - contains: {properties: {type: {enum: [ADVISOR_MIN_ADVANCE_NOTIFICATION_TIME]}}}
+                        - contains: {properties: {type: {enum: [ADVISOR_MAX_GENUP_LOADDOWN_DURATION]}}}
+                        - contains: {properties: {type: {enum: [ADVISOR_MAX_GENDOWN_LOADUP_DURATION]}}}
+                        - contains: {properties: {type: {enum: [ADVISOR_REQUIRED_RECOVERY_TIME]}}}
+                        - contains: {properties: {type: {enum: [ADVISOR_COMMUNICATION_STATUS]}}}
+                        - contains: {properties: {type: {enum: [ADVISOR_AVAILABLE_ACCESS_METHODS]}}}
+            - properties:
+                attributes:
+                    allOf:
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_NUM_DEVICES_REPRESENTED}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_DEVICE_TYPE}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_FACILITY_TYPE}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_LAT_LON_ACCURACY}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_LATITUDE}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_LONGITUDE}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_MIN_LATITUDE}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_MAX_LATITUDE}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_MIN_LONGITUDE}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_MAX_LONGITUDE}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_SERVICE_CAPABILITY_TYPE}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_MAX_GENUP_LOADDOWN}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_MAX_LOADUP_GENDOWN}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_MAX_VAR_INJUP_ABSDOWN}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_MAX_VAR_ABSUP_INJDOWN}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_ADVANCE_NOTIFICATION_REQUIRED}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_MIN_ADVANCE_NOTIFICATION_TIME}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_RAMP_RATE_ADJUSTABILITY}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_RAMP_MIN_ADJUSTABLE_RATE}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_RAMP_MAX_ADJUSTABLE_RATE}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_MAX_GENUP_LOADDOWN_DURATION}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_MAX_GENDOWN_LOADUP_DURATION}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_MAX_VAR_INJUP_ABSDOWN_DURATION}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_MAX_VAR_ABSUP_INJDOWN_DURATION}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_REQUIRED_RECOVERY_TIME}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_AVAILABLE_MONTHS}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_AVAILABLE_HOURS_WEEKDAY}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_AVAILABLE_HOURS_WEEKEND}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_SEASONAL_VARIABILITY}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_CALLS_PER_WEEK}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_COMMUNICATION_STATUS}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_CONSUMER_STATUS}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_AVAILABLE_ACCESS_METHODS}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_COMMUNICATION_NETWORK}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_DEVICE_LEVEL_PROTOCOL}}
+                                required: [type]
+                            minContains: 2
+                        - not:
+                            contains:
+                                properties: {type: {const: ADVISOR_AGGREGATOR_VPP_LEVEL_PROTOCOL}}
+                                required: [type]
+                            minContains: 2
+            - if:
+                properties:
+                    attributes:
+                        contains:
+                            properties:
+                                type: {enum: [ADVISOR_NUM_DEVICES_REPRESENTED]}
+                                values: {contains: {enum: [1]}}
+              then:
+                properties:
+                    attributes:
+                        allOf:
+                            - contains: {properties: {type: {enum: [ADVISOR_LATITUDE]}}}
+                            - contains: {properties: {type: {enum: [ADVISOR_LONGITUDE]}}}
+            - if:
+                properties:
+                    attributes:
+                        contains:
+                            properties:
+                                type: {enum: [ADVISOR_NUM_DEVICES_REPRESENTED]}
+                                values: {contains: {minimum: 2}}
+              then:
+                properties:
+                    attributes:
+                        allOf:
+                            - contains: {properties: {type: {enum: [ADVISOR_MIN_LATITUDE]}}}
+                            - contains: {properties: {type: {enum: [ADVISOR_MAX_LATITUDE]}}}
+                            - contains: {properties: {type: {enum: [ADVISOR_MIN_LONGITUDE]}}}
+                            - contains: {properties: {type: {enum: [ADVISOR_MAX_LONGITUDE]}}}
+            - if:
+                properties:
+                    attributes:
+                        contains:
+                            properties:
+                                type: {enum: [ADVISOR_AVAILABLE_ACCESS_METHODS]}
+                                values: {contains: {enum: [DIRECT_ACCESS_TO_DEVICE_AVAILABLE]}}
+              then:
+                properties:
+                    attributes:
+                        contains: {properties: {type: {enum: [ADVISOR_DEVICE_LEVEL_PROTOCOL]}}}
+            - if:
+                properties:
+                    attributes:
+                        contains:
+                            properties:
+                                type: {enum: [ADVISOR_AVAILABLE_ACCESS_METHODS]}
+                                values:
+                                    contains:
+                                        enum:
+                                            - ACCESS_THROUGH_MANUFACTURER_AGGREGATOR_AVAILABLE
+                                            - ACCESS_THROUGH_THIRD_PARTY_AGGREGATOR_AVAILABLE
+              then:
+                properties:
+                    attributes:
+                        contains: {properties: {type: {enum: [ADVISOR_AGGREGATOR_VPP_LEVEL_PROTOCOL]}}}
