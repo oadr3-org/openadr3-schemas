@@ -1,0 +1,32 @@
+$id: "./report-conditions.schema.json"
+title: "Report-Conditions"
+description: "Enumerations available for reportDescriptor conditions"
+$comment: |
+    Schema for OpenADR 3 reportDescriptor conditions.
+
+    This file is released under the Apache 2.0 license.
+    Read more at: http://www.apache.org/licenses/LICENSE-2.0.html
+
+definitions:
+    DELTA_RELATIVE:
+        $id: 'report-conditions.schema.json#/definitions/DELTA_RELATIVE'
+        description: |
+            Defines a relative change threshold used as a trigger. A report 
+            is generated when the percentage difference between the current 
+            measurement and the last reported value exceeds the threshold 
+            specified in the values array. (Used in conditions-property of 
+            reportDescriptor) Values MUST be represented as floating-point 
+            numbers consistent with the PERCENT unit definition, 
+            where 1.0 equals 100% and 0.4 equals 40%.
+        type: number
+    DELTA_ABSOLUTE:
+        $id: 'report-conditions.schema.json#/definitions/DELTA_RELATIVE'
+        description: |
+            Defines an absolute change threshold used as a trigger. A report 
+            is generated when the absolute difference between the current 
+            measurement and the last reported value exceeds the threshold 
+            specified in the values array. (Used in conditions-property of 
+            reportDescriptor)
+        type: number
+
+
