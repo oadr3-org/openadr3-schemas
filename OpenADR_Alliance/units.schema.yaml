@@ -1,6 +1,6 @@
 $id: "./units.schema.json"
 title: "Units"
-description: "Units values for the eventPayloadDescriptor"
+description: "Units values for the payloadDescriptor"
 $comment: |
     Schema for OpenADR 3 event payload descriptor units
 

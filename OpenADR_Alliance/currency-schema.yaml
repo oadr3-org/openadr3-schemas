@@ -1,0 +1,12 @@
+$id: "./currency.schema.json"
+title: "Currency"
+description: "Currency values for the payloadDescriptor"
+$comment: |
+    Schema for OpenADR 3 payload descriptor currency property.
+    
+    Currency denominations adhere to the ISO 4217 standard [ISO 4217]. 
+    Also available on the web section [ISO 4217] - Currency Code Maintenance: 
+    Get the Correct Currency Code under "List One (XLS)".
+
+    This file is released under the Apache 2.0 license.
+    Read more at: http://www.apache.org/licenses/LICENSE-2.0.html
