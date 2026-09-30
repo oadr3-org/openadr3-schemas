@@ -1,0 +1,38 @@
+$id: "./notifications.schema.json"
+title: "Notifications"
+description: "Notifications values"
+$comment: |
+    Schema for OpenADR 3 notifications
+
+    This file is released under the Apache 2.0 license.
+    Read more at: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# This schema is different in that it does not define
+# entries in a valuesMap.
+
+definitions:
+    WEBHOOK:
+        description: |
+            Notifications via HTTP webhook. A required property of the notifiersResponse object.
+    MQTT:
+        description: |
+            Notifications via the MQTT protocol. An optional property of the notifiersResponse object.
+    WEBSOCKET:
+        description: |
+            Notifications via websocket. An optional property of the notifiersResponse object.
+    JSON:
+        description: |
+            The value of the mqttNotifierBindingObject.serialization property. 
+            Messages published to the topic are in JSON format.
+    ANONYMOUS:
+        description: |
+            A possible value of the mqttNotifierBindingObject.authentication property. 
+            No authentication to message broker.
+    OAUTH2_BEARER_TOKEN:
+        description: |
+             A possible value of the mqttNotifierBindingObject.authentication property. 
+             Use token as password and specified username as username.
+    CERTIFICATE:
+        description: |
+            A possible value of the mqttNotifierBindingObject.authentication property. 
+            Use strings provided as the client certificate.
