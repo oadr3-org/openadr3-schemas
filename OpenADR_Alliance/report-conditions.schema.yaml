@@ -18,15 +18,23 @@ definitions:
             reportDescriptor) Values MUST be represented as floating-point 
             numbers consistent with the PERCENT unit definition, 
             where 1.0 equals 100% and 0.4 equals 40%.
-        type: number
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
     DELTA_ABSOLUTE:
-        $id: 'report-conditions.schema.json#/definitions/DELTA_RELATIVE'
+        $id: 'report-conditions.schema.json#/definitions/DELTA_ABSOLUTE'
         description: |
             Defines an absolute change threshold used as a trigger. A report 
             is generated when the absolute difference between the current 
             measurement and the last reported value exceeds the threshold 
             specified in the values array. (Used in conditions-property of 
             reportDescriptor)
-        type: number
+        type: array
+        minItems: 1
+        maxItems: 1
+        items:
+            type: number
 
 
