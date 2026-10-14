@@ -10,3 +10,7 @@ $comment: |
 
     This file is released under the Apache 2.0 license.
     Read more at: http://www.apache.org/licenses/LICENSE-2.0.html
+
+type: string
+pattern: '^[A-Z]{3}$'
+examples: [USD, EUR]
