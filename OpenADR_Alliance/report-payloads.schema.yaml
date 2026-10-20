@@ -14,34 +14,37 @@ definitions:
         $id: 'report-payloads.schema.json#/definitions/READING'
         description: |
             An instantaneous data point, as from a meter. Same as pulse count. Payload
-            value is a float and units are defined in payloadDescriptor.
+            value is one or more floats and units are defined in payloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
     USAGE:
         $id: 'report-payloads.schema.json#/definitions/USAGE'
         description: |
-            Energy usage over an interval. Payload value is a float and units are defined in
+            Energy usage over an interval. Payload value is one or more floats and units are defined in
             payloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
             minimum: 0
     DEMAND:
         $id: 'report-payloads.schema.json#/definitions/DEMAND'
         description: |
-            Power usage for an interval, i.e. Real Power. Payload value is a float, units
+            Power usage for an interval, i.e. Real Power. Payload value is one or more floats, units
             defined in payloadDescriptor. Reading type indicates MEAN, PEAK,
             FORECAST or DIRECT_READ.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
             minimum: 0
     SETPOINT:
         $id: 'report-payloads.schema.json#/definitions/SETPOINT'
@@ -53,7 +56,7 @@ definitions:
             payload will be defined by program providers.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             oneOf:
                 - type: number
@@ -66,26 +69,26 @@ definitions:
     DELTA_USAGE:
         $id: 'report-payloads.schema.json#/definitions/DELTA_USAGE'
         description: |
-            Change in usage as compared to a baseline. Payload value is a float and units
+            Change in usage as compared to a baseline. Payload value is one or more floats and units
             are defined in payloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     BASELINE:
         $id: 'report-payloads.schema.json#/definitions/BASELINE'
         description: |
             Indicates energy or power consumption in the absence of load control.
-            Payload value is determined by reading type which may indicate usage or
+            Payload value is one or more floats determined by reading type which may indicate usage or
             demand.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     OPERATING_STATE:
         $id: 'report-payloads.schema.json#/definitions/OPERATING_STATE'
         description: |
@@ -140,92 +143,91 @@ definitions:
                 # resourceName attribute. This resourceName indicates the the interval data
                 # is the aggregate of data from more than one resource.
                 - AGGREGATED_REPORT
-
     UP_REGULATION_AVAILABLE:
         $id: 'report-payloads.schema.json#/definitions/UP_REGULATION_AVAILABLE'
         description: |
-            Up Regulation capacity available for dispatch, in real power. Payload value is a
-            float, units defined in payloadDescriptor.
+            Up Regulation capacity available for dispatch, in real power. Payload value is one or more floats,
+            units defined in payloadDescriptor.
             Reading type indicates MEAN, PEAK, FORECAST.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     DOWN_REGULATION_AVAILABLE:
         $id: 'report-payloads.schema.json#/definitions/DOWN_REGULATION_AVAILABLE'
         description: |
             Down Regulation capacity available for dispatch, in real power. Payload value
-            is a float, units defined in payloadDescriptor.
+            is one or more floats, units defined in payloadDescriptor.
             Reading type indicates MEAN, PEAK, FORECAST.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     REGULATION_SETPOINT:
         $id: 'report-payloads.schema.json#/definitions/REGULATION_SETPOINT'
         description: |
             Regulation setpoint as instructed as part of regulation services. Payload value
-            is a float, units defined in payloadDescriptor.
+            is one or more floats, units defined in payloadDescriptor.
             Reading type indicates MEAN, PEAK, FORECAST.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     STORAGE_USABLE_CAPACITY:
         $id: 'report-payloads.schema.json#/definitions/STORAGE_USABLE_CAPACITY'
         description: |
             Usable energy that the storage device can hold when fully charged. Payload
-            value is a float, units of energy defined in payloadDescriptor.
+            value is one or more floats, units of energy defined in payloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     STORAGE_CHARGE_LEVEL:
         $id: 'report-payloads.schema.json#/definitions/STORAGE_CHARGE_LEVEL'
         description: |
             Current storage charge level expressed as a percentage, where 0% is empty
-            and 100% is full. Payload value is a float, units of PERCENT defined in
+            and 100% is full. Payload value is one or more floats, units of PERCENT defined in
             payloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
             minimum: 0
             maximum: 1
-
     STORAGE_MAX_DISCHARGE_POWER:
         $id: 'report-payloads.schema.json#/definitions/STORAGE_MAX_DISCHARGE_POWER'
         description: |
             The maximum sustainable power that can be discharged into an electricity
-            network (injection). Payload value is a float, units of power defined in
+            network (injection). Payload value is one or more floats, units of power defined in
             payloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     STORAGE_MAX_CHARGE_POWER:
         $id: 'report-payloads.schema.json#/definitions/STORAGE_MAX_CHARGE_POWER'
         description: |
             The maximum sustainable power that can be charged from an electricity
-            network (load). Payload value is a float, units of power defined in
+            network (load). Payload value is one or more floats, units of power defined in
             payloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     SIMPLE_LEVEL:
         $id: 'report-payloads.schema.json#/definitions/SIMPLE_LEVEL'
         description: |
@@ -238,51 +240,50 @@ definitions:
             type: integer
             minimum: 0
             maximum: 3
-
     USAGE_FORECAST:
         $id: 'report-payloads.schema.json#/definitions/USAGE_FORECAST'
         description: |
-            Payload values array contains a single float indicating expected resource
+            Payload values is one or more floats indicating expected resource
             usage for the associated interval. Units of energy defined in payloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     STORAGE_DISPATCH_FORECAST:
         $id: 'report-payloads.schema.json#/definitions/STORAGE_DISPATCH_FORECAST'
         description: |
-            Payload values array contains a single float indicating expected stored energy
+            Payload values is one or more floats indicating expected stored energy
             that could be dispatched for the associated interval.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     LOAD_SHED_DELTA_AVAILABLE:
         $id: 'report-payloads.schema.json#/definitions/LOAD_SHED_DELTA_AVAILABLE'
         description: |
-            Payload values array contains a single float indicating expected increase or
+            Payload values is one or more floats indicating expected increase or
             decrease in load by a resource for the associated interval.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     GENERATION_DELTA_AVAILABLE:
         $id: 'report-payloads.schema.json#/definitions/GENERATION_DELTA_AVAILABLE'
         description: |
-            Payload values array contains a single float indicating expected generation by
+            Payload values is one or more floats indicating expected generation by
             a resource for the associated interval.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     DATA_QUALITY:
         $id: 'report-payloads.schema.json#/definitions/DATA_QUALITY'
         description: |
@@ -305,48 +306,48 @@ definitions:
                 - ESTIMATED
                 # There is a data item but it is known or suspected to be erroneous.
                 - BAD
-
     IMPORT_RESERVATION_CAPACITY:
         $id: 'report-payloads.schema.json#/definitions/IMPORT_RESERVATION_CAPACITY'
         description: |
-            Amount of additional import capacity requested. Payload values are a float.
+            Amount of additional import capacity requested. Payload values is one or more floats.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     IMPORT_RESERVATION_FEE:
         $id: 'report-payloads.schema.json#/definitions/IMPORT_RESERVATION_FEE'
         description: |
             Amount per unit of import capacity that the VEN is willing to pay for the
-            requested reservation. Payload value is a float with currency defined in
+            requested reservation. Payload value one or more floats with currency defined in
             payloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     EXPORT_RESERVATION_CAPACITY:
         $id: 'report-payloads.schema.json#/definitions/EXPORT_RESERVATION_CAPACITY'
         description: |
-            Amount of additional export capacity requested. Payload values are a float.
+            Amount of additional export capacity requested. Payload values is one or more floats.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
-
+            format: float
     EXPORT_RESERVATION_FEE:
         $id: 'report-payloads.schema.json#/definitions/EXPORT_RESERVATION_FEE'
         description: |
             Amount per unit of export capacity that the VEN is willing to pay for the
-            requested reservation. Payload value is a float with currency defined in
+            requested reservation. Payload value is one or more floats with currency defined in
             payloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
 

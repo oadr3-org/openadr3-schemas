@@ -27,26 +27,28 @@ definitions:
     PRICE:
         $id: 'event-interval-payloads.schema.json#/definitions/PRICE'
         description: |
-            The price of energy. Payload value is a float. Units and currency
+            The price of energy. Payload value is one or more floats. Units and currency
             defined in associated eventPayloadDescriptor.
             Note: Can be used for any form of energy.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
     PRICE_ALTERNATE:
         $id: 'event-interval-payloads.schema.json#/definitions/PRICE_ALTERNATE'
         description: |
             The price of a second form of energy, as defined by the program.
-            Payload value is a float. Units and currency
+            Payload value is one or more floats. Units and currency
             defined in associated eventPayloadDescriptor.
             Note: Can be used for any form of energy.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
     CHARGE_STATE_SETPOINT:
         $id: 'event-interval-payloads.schema.json#/definitions/CHARGE_STATE_SETPOINT'
         description: |
@@ -55,7 +57,7 @@ definitions:
             Note: Common units are percentage and kWh.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
             minimum: 0
@@ -63,25 +65,27 @@ definitions:
         $id: 'event-interval-payloads.schema.json#/definitions/DISPATCH_SETPOINT'
         description: |
             The absolute amount of consumption by a resource. Payload value is
-            a float and is indicated by units in associated eventPayloadDescriptor.
+            one or more floats and is indicated by units in associated eventPayloadDescriptor.
             Note: This is used to dispatch resources.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
             minimum: 0
+            format: float
     DISPATCH_SETPOINT_RELATIVE:
         $id: 'event-interval-payloads.schema.json#/definitions/DISPATCH_SETPOINT_RELATIVE'
         description: |
-            The relative change of consumption by a resource. Payload value is a
-            float and is indicated by units in associated eventPayloadDescriptor.
+            The relative change of consumption by a resource. Payload value is one or more floats
+            and is indicated by units in associated eventPayloadDescriptor.
             Note: This is used to dispatch a resource's load.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
     DISPATCH_INSTRUCTION:
         $id: 'event-interval-payloads.schema.json#/definitions/DISPATCH_INSTRUCTION'
         description: |
@@ -103,7 +107,7 @@ definitions:
             payload will be defined by program providers.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             oneOf:
                 - type: number
@@ -113,7 +117,6 @@ definitions:
                   maxLength: 128
                 - type: boolean
                 - $ref: '#/components/schemas/point'
-
     CONTROL_LEVEL_OFFSET:
         $id: 'event-interval-payloads.schema.json#/definitions/CONTROL_LEVEL_OFFSET'
         description: |
@@ -124,7 +127,7 @@ definitions:
             Payload value is an integer between -10 and +10 with no units.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: integer
             minimum: -10
@@ -141,7 +144,7 @@ definitions:
             in associated eventPayloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
             minimum: -1
@@ -151,22 +154,23 @@ definitions:
         $id: 'event-interval-payloads.schema.json#/definitions/EXPORT_PRICE'
         description: |
             The price of energy exported (usually to the grid). Payload value is
-            float and units and currency are defined in associated
+            one or more floats and units and currency are defined in associated
             eventPayloadDescriptor.
             Note: Can be used for any form of energy.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
     GHG:
         $id: 'event-interval-payloads.schema.json#/definitions/GHG'
         description: |
             An estimate of marginal GreenHouse Gas emissions, in g/kWh.
-            Payload value is float.
+            Payload value is one or more floats.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
             minimum: 0
@@ -180,9 +184,9 @@ definitions:
         items:
             type: array
             minItems: 1
+            maxItems: 8760
             items:
                 $ref: '#/components/schemas/point'
-
     OLS:
         $id: 'event-interval-payloads.schema.json#/definitions/OLS'
         description: |
@@ -195,141 +199,155 @@ definitions:
             type: number
             minimum: 0
             maximum: 1
-    IMPORT_CAPACITY_SUBSCRIPTION:
+            minItems: 1
+            maxItems: 8760
+      IMPORT_CAPACITY_SUBSCRIPTION:
         $id: 'event-interval-payloads.schema.json#/definitions/IMPORT_CAPACITY_SUBSCRIPTION'
         description: |
             The amount of import capacity a customer has subscribed to in
-            advance. Payload is a float, and meaning is indicated by units in
+            advance. Payload is one or more floats, and meaning is indicated by units in
             associated eventPayloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
             minimum: 0
     IMPORT_CAPACITY_RESERVATION:
         $id: 'event-interval-payloads.schema.json#/definitions/IMPORT_CAPACITY_RESERVATION'
         description: |
             The amount of additional import capacity that a customer has been
-            granted by the VTN. Payload is a float, and meaning is indicated by
+            granted by the VTN. Payload is one or more floats, and meaning is indicated by
             units in associated eventPayloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
             minimum: 0
     IMPORT_CAPACITY_RESERVATION_FEE:
         $id: 'event-interval-payloads.schema.json#/definitions/IMPORT_CAPACITY_RESERVATION_FEE'
         description: |
             The cost per unit of power of extra import capacity available for
-            reservation. Payload is a float, and meaning is indicated by units in
+            reservation. Payload is ne or more floats, and meaning is indicated by units in
             associated eventPayloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
     IMPORT_CAPACITY_AVAILABLE:
         $id: 'event-interval-payloads.schema.json#/definitions/IMPORT_CAPACITY_AVAILABLE'
         description: |
             The amount of extra import capacity available for reservation to the
-            customer. Payload is a float, and meaning is indicated by units in
+            customer. Payload is one or more floats, and meaning is indicated by units in
             associated eventPayloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
     IMPORT_CAPACITY_AVAILABLE_PRICE:
         $id: 'event-interval-payloads.schema.json#/definitions/IMPORT_CAPACITY_AVAILABLE_PRICE'
         description: |
             The cost per unit of power of extra import capacity available for
-            reservation. Payload is a float, and meaning is indicated by units in
+            reservation. Payload is one or more floats, and meaning is indicated by units in
             associated eventPayloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
     EXPORT_CAPACITY_SUBSCRIPTION:
         $id: 'event-interval-payloads.schema.json#/definitions/EXPORT_CAPACITY_SUBSCRIPTION'
         description: |
             The amount of export capacity a customer has subscribed to in
-            advance. Payload is a float, and meaning is indicated by units in
+            advance. Payload is one or more floats, and meaning is indicated by units in
             associated eventPayloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
     EXPORT_CAPACITY_RESERVATION:
         $id: 'event-interval-payloads.schema.json#/definitions/EXPORT_CAPACITY_RESERVATION'
         description: |
             The amount of additional export capacity that a customer has been
-            granted by the VTN. Payload is a float, and meaning is indicated by
+            granted by the VTN. Payload is one or more floats, and meaning is indicated by
             units in associated eventPayloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
             minimum: 0
     EXPORT_CAPACITY_RESERVATION_FEE:
         $id: 'event-interval-payloads.schema.json#/definitions/EXPORT_CAPACITY_RESERVATION_FEE'
         description: |
             The cost per unit of power of extra export capacity available for
-            reservation. Payload is a float, and meaning is indicated by units in
+            reservation. Payload is one or more floats, and meaning is indicated by units in
             associated eventPayloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
     EXPORT_CAPACITY_AVAILABLE:
         $id: 'event-interval-payloads.schema.json#/definitions/EXPORT_CAPACITY_AVAILABLE'
         description: |
             The amount of extra export capacity available for reservation to the
-            customer. Payload is a float, and meaning is indicated by units in
+            customer. Payload is one or more floats, and meaning is indicated by units in
             associated eventPayloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
     EXPORT_CAPACITY_AVAILABLE_PRICE:
         $id: 'event-interval-payloads.schema.json#/definitions/EXPORT_CAPACITY_AVAILABLE_PRICE'
         description: |
             The cost per unit of power of extra export capacity available for
-            reservation. Payload is a float, and meaning is indicated by units in
+            reservation. Payload is one or more floats, and meaning is indicated by units in
             associated eventPayloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
+            format: float
     IMPORT_CAPACITY_LIMIT:
         $id: 'event-interval-payloads.schema.json#/definitions/IMPORT_CAPACITY_LIMIT'
         description: |
-            The maximum import level for the site. Payload is a float and meaning
+            The maximum import level for the site. Payload is one or more floats and meaning
             is indicated by units in associated eventPayloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
             minimum: 0
+            format: float
     EXPORT_CAPACITY_LIMIT:
         $id: 'event-interval-payloads.schema.json#/definitions/EXPORT_CAPACITY_LIMIT'
         description: |
-            The maximum export level for the site. Payload is a float and meaning
+            The maximum export level for the site. Payload is one or more floats and meaning
             is indicated by units in associated eventPayloadDescriptor.
         type: array
         minItems: 1
-        maxItems: 1
+        maxItems: 8760
         items:
             type: number
             minimum: 0
+            format: float
     ALERT_GRID_EMERGENCY:
         $id: 'event-interval-payloads.schema.json#/definitions/ALERT_GRID_EMERGENCY'
         description: |
