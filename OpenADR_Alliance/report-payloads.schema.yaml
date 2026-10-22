@@ -331,7 +331,7 @@ definitions:
     EXPORT_RESERVATION_CAPACITY:
         $id: 'report-payloads.schema.json#/definitions/EXPORT_RESERVATION_CAPACITY'
         description: |
-            Amount of additional export capacity requested. Payload values is one or more floats.
+            Amount of additional export capacity requested. Payload values are one or more floats.
         type: array
         minItems: 1
         maxItems: 8760
