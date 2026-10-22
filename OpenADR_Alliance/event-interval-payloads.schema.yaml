@@ -124,7 +124,7 @@ definitions:
             There is no requirement to link the setpoints to specific load consumption values,
             but the intention is that the higher the setpoint the less load is consumed
             (where negative values would indicate higher load consumption).
-            Payload value is an integer between -10 and +10 with no units.
+            Payload value is one or more integers between -10 and +10 with no units.
         type: array
         minItems: 1
         maxItems: 8760
