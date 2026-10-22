@@ -276,7 +276,7 @@ definitions:
     GENERATION_DELTA_AVAILABLE:
         $id: 'report-payloads.schema.json#/definitions/GENERATION_DELTA_AVAILABLE'
         description: |
-            Payload values is one or more floats indicating expected generation by
+            Payload values are one or more floats indicating expected generation by
             a resource for the associated interval.
         type: array
         minItems: 1
