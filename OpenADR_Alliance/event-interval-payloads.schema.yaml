@@ -201,7 +201,7 @@ definitions:
             maximum: 1
             minItems: 1
             maxItems: 8760
-      IMPORT_CAPACITY_SUBSCRIPTION:
+    IMPORT_CAPACITY_SUBSCRIPTION:
         $id: 'event-interval-payloads.schema.json#/definitions/IMPORT_CAPACITY_SUBSCRIPTION'
         description: |
             The amount of import capacity a customer has subscribed to in
