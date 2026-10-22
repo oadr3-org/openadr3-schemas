@@ -254,7 +254,7 @@ definitions:
     STORAGE_DISPATCH_FORECAST:
         $id: 'report-payloads.schema.json#/definitions/STORAGE_DISPATCH_FORECAST'
         description: |
-            Payload values is one or more floats indicating expected stored energy
+            Payload values are one or more floats indicating expected stored energy
             that could be dispatched for the associated interval.
         type: array
         minItems: 1
