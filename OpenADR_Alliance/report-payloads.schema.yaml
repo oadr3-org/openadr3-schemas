@@ -320,7 +320,7 @@ definitions:
         $id: 'report-payloads.schema.json#/definitions/IMPORT_RESERVATION_FEE'
         description: |
             Amount per unit of import capacity that the VEN is willing to pay for the
-            requested reservation. Payload value one or more floats with currency defined in
+            requested reservation. Payload value is one or more floats with currency defined in
             payloadDescriptor.
         type: array
         minItems: 1
