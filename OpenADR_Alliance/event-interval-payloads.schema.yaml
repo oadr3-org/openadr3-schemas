@@ -195,12 +195,11 @@ definitions:
             the event.
             Note: See ANSI-SCTE 267.
         type: array
-        items:
             type: number
             minimum: 0
             maximum: 1
-            minItems: 1
-            maxItems: 8760
+        minItems: 1
+        maxItems: 8760
     IMPORT_CAPACITY_SUBSCRIPTION:
         $id: 'event-interval-payloads.schema.json#/definitions/IMPORT_CAPACITY_SUBSCRIPTION'
         description: |
